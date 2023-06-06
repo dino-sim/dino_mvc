@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "dinomvc"
+version = "0.1.0"
+description = ""
+authors = ["Hyunin Sim <holasim91@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.96.0"
+uvicorn = "^0.22.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
