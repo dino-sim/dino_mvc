@@ -1,16 +1,10 @@
 from fastapi import FastAPI
 
-app = FastAPI()
+from db.session import Base, engine
+from routers.router import api_router
 
+app = FastAPI(title="Dino's FASTAPI Boilerplate")
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+Base.metadata.create_all(bind=engine)
 
-
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
-
-
-
+app.include_router(api_router)

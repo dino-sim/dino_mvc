@@ -1,17 +1,22 @@
 [tool.poetry]
 name = "dinomvc"
 version = "0.1.0"
-description = ""
-authors = ["Hyunin Sim <holasim91@gmail.com>"]
+description = "boiler-palate"
+authors = ["Dino Sim <dino@nonegolab.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-fastapi = "^0.96.0"
+fastapi = "^0.95.1"
 uvicorn = "^0.22.0"
-
+sqlalchemy = "^2.0.13"
+pymysql = "^1.0.3"
+passlib = "^1.7.4"
+python-multipart = "^0.0.6"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+python-dotenv = "^1.0.0"
+bcrypt = "^4.0.1"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
