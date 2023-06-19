@@ -22,11 +22,18 @@ class TodoRequest(BaseModel):
     complete: bool
 
 
+# @router.get("/", status_code=status.HTTP_200_OK)
+# async def read_all(user: user_dependency, db: db_dependency):
+#     if user is None:
+#         raise HTTPException(status_code=401, detail='Authentication Failed')
+#     todo_model = db.query(Todos).filter(Todos.owner_id == user.get('id')).all()
+#     if todo_model is not None:
+#         return todo_model
+#     raise HTTPException(status_code=404, detail='data is not exist')
+
 @router.get("/", status_code=status.HTTP_200_OK)
-async def read_all(user: user_dependency, db: db_dependency):
-    if user is None:
-        raise HTTPException(status_code=401, detail='Authentication Failed')
-    todo_model = db.query(Todos).filter(Todos.owner_id == user.get('id')).all()
+async def read_all(db: db_dependency):
+    todo_model = db.query(Todos).all()
     if todo_model is not None:
         return todo_model
     raise HTTPException(status_code=404, detail='data is not exist')
@@ -36,6 +43,7 @@ async def read_all(user: user_dependency, db: db_dependency):
 async def read_todo(user: user_dependency, db: db_dependency, todo_id: int = Path(gt=0)):
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication Failed')
+    print(user)
     todo_model = db.query(Todos).filter(Todos.id == todo_id).filter(Todos.owner_id == user.get('id')).first()
     if todo_model is not None:
         return todo_model
@@ -46,6 +54,7 @@ async def read_todo(user: user_dependency, db: db_dependency, todo_id: int = Pat
 async def create_todo(user: user_dependency, db: db_dependency, todo_request: TodoRequest):
     # if user is None:
     #     raise HTTPException(status_code=401, detail='Authentication Failed')
+    print(user)
     no_user(user)
     todo_model = Todos(**todo_request.dict(), owner_id=user.get('id'))
     db.add(todo_model)
