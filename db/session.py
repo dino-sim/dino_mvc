@@ -3,8 +3,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 from dotenv import load_dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
 from odmantic import AIOEngine
-import boto3
-
+from boto3 import client
 import os
 
 load_dotenv()
@@ -39,11 +38,13 @@ class MongoDB:
     def close(self):
         self.client.close()
 
+# S3
+
 
 s3_access_key = os.environ.get('S3_ACCESS_KEY')
 s3_secret_key = os.environ.get('S3_SECRET_KEY')
-
-client_s3 = boto3.client(
+s3_bucket_name = os.environ.get('S3_BUCKET_NAME')
+client_s3 = client(
     's3',
     aws_access_key_id=s3_access_key,
     aws_secret_access_key=s3_secret_key
