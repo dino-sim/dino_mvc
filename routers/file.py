@@ -1,5 +1,5 @@
 from botocore.exceptions import ClientError
-from fastapi import UploadFile, APIRouter, HTTPException
+from fastapi import UploadFile, APIRouter, HTTPException, Path
 from starlette import status
 
 from db.session import client_s3, s3_bucket_name
@@ -11,6 +11,21 @@ from routers.deps import db_dependency, user_dependency
 from util.genrateUploadFilename import generate_filename_for_s3
 
 router = APIRouter()
+
+
+@router.get("/download/{file_id}", status_code=status.HTTP_200_OK)
+def download(user: user_dependency, db: db_dependency, file_id: int = Path(gt=0)):
+    if user is None:
+        raise HTTPException(status_code=401, detail='Authentication Failed')
+
+    file_model = db.query(FileInfos).filter(FileInfos.id == file_id).first()
+
+    if file_model is not None:
+        res = file_model.src
+
+        return res
+
+    raise HTTPException(status_code=404, detail='file_id is not exist')
 
 
 @router.post("/uploadfile/", status_code=status.HTTP_200_OK)

@@ -1,5 +1,5 @@
 import sqlalchemy
-from sqlalchemy import Column, Integer, String, Text, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey
 
 from db.session import Base
 
@@ -13,4 +13,5 @@ class FileInfos(Base):
     src = Column(String(200))
     created_at = Column(sqlalchemy.DateTime)
     owner_id = Column(Integer, ForeignKey("users.id"))
+
 
